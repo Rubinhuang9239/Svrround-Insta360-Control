@@ -1,0 +1,333 @@
+<html>
+	
+	<head>
+		
+	<style>
+		
+		html,body{
+			height:100%;
+			width: 100%;
+			margin: 0px;
+			padding: 0px;
+			background: #222;
+			font-family: helvetica;
+		}
+		
+		.panel{
+			width: 100%;
+			box-sizing: border-box;
+			border-top: solid 0.5px #666;
+			color: #AAA;
+			padding: 10px;
+
+		}
+		
+		.Indicators{
+			float: left;
+			width: 33.333%;
+			margin: 0px;
+			padding:0px;
+			height: 30px;
+		}
+		
+		.led{
+			height: 12px;
+			width: 12px;
+			background-color: #555;
+			border-radius: 50%;
+			float: left;
+			margin-right: 5px;
+		}
+
+		#connection .led{
+			background-color: #FA0;
+		}
+		
+		#preview{
+			position:absolute;
+			top: 0px;
+			left: 0px;
+			height:360px;
+			width:50%;
+		}
+		
+		#previewImg{
+			width: 100%;
+			height: 100%;
+			background-color: #000;
+			border-radius: 4px;
+			background-image: url("img/coverImg.png");
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: contain;
+			overflow: hidden;
+		}
+
+		
+		#indication{
+			position:absolute;
+			top: 0px;
+			right: 0px;
+			height:360px;
+			width: 50%;
+			padding-left: 0px;
+		}
+		
+		#controls{
+			position:absolute;
+			top:360px;
+		}
+		
+		.panelHeaders{
+			width: 100%;
+			height: 1em;
+			line-height: 1em;
+		}
+		
+		#about{
+			position: absolute;
+			top: 700px;
+		}
+
+		#indicatorBox{
+			height: 20px;
+			width: 100%;
+		}
+
+		#logBox{
+			height: 255px;
+			width: 100%;
+			background-color: #111;
+			box-sizing: border-box;
+			overflow-x:hidden;
+			overflow-y: scroll;
+			border-radius: 4px;
+			list-style: none;
+			padding: 5px;
+		}
+
+		.errLog{
+			color: #F00;
+			width: 100%;
+			padding: 0px;
+		}
+
+		.msgLog{
+			color: #FB0;
+			width: 100%;
+			padding: 0px;
+		}
+
+		#cameraIP{
+			border-radius: 4px;
+			width: 100%;
+			min-width: 240px;
+			padding: 4px;
+			font-size: 1em;
+			line-height: 1.5em;
+			border:none;
+			background-color: #444;
+		}
+
+		select{
+			width: 100%;
+			min-width: 240px;
+			font-size: 1em;
+			line-height: 1.25em;
+			background-color: #444;
+			border:none;
+			border-radius: 4px;
+			color: #AAA;
+		}
+
+		#controlConfig{
+			padding: 10px;
+			box-sizing: border-box;
+			position: absolute;
+			width: 50%;
+			height: 300px;
+			top:0px;
+			left: 0px;
+		}
+
+		#controlKeys{
+			color: #FFF;
+			box-sizing: border-box;
+			position: absolute;
+			width: 50%;
+			height: 320px;
+			top:5px;
+			right: 0px;
+			font-size: 1.25em;
+		}
+
+		#startConn{
+			height: 70px;
+			width: 62%;
+			line-height: 70px;
+			background-color: #FF9900;
+		}
+
+		#startStream{
+			top: 75px;
+			height: 135px;
+			width: 62%;
+			line-height: 135px;
+			background-color: #FF9900;
+		}
+
+		#startPreview{
+			top: 215px;
+			height: 110px;
+			background-color: #EEBB00;
+			width: 62%;
+			line-height: 110px;
+		}
+
+		.controlFunc{
+			position: absolute;
+			border-radius: 4px;
+			text-align: center;
+			cursor: pointer;
+			transition: all 0.3s ease-in-out;
+		}
+		.controlFunc:hover{
+			font-size: 1.1em;
+		}
+
+		#lsFile{
+			right: 5px;
+			height: 210px;
+			width: 36%;
+			line-height: 210px;
+			background-color: #CCA;
+		}
+
+		#camInfo{
+			top: 215px;
+			right: 5px;
+			height: 110px;
+			width: 36%;
+			line-height: 110px;
+			background-color: #CCA;
+		}
+
+
+		
+	</style>
+		
+	<script src = "js/socket.io.js"></script>
+	<script src = "js/socket.js"></script>
+	<script src = "js/animate.js"></script>
+		
+	</head>
+	
+	<script>
+		
+		window.addEventListener("load", function(){
+			
+
+			animate.init();
+
+
+			
+		})
+		
+		
+	</script>
+	
+	<body>
+		
+		
+		<div class = "panel" id = "preview">
+			
+			<img id = "previewImg" />
+			
+			
+		</div>
+		
+		<div class = "panel" id = "indication">
+			<p class = "panelHeaders">Indicators</p>
+			
+			<div id = "indicatorBox">
+				<div class = "Indicators" id = "connection">
+					<div class = "led"></div>connection
+				</div>
+				<div class = "Indicators" id = "streaming">
+					<div class = "led"></div>streaming
+				</div>
+				<div class = "Indicators" id = "previewing">
+					<div class = "led"></div>previewing
+				</div>
+
+			</div>
+				
+			<div id = "terminal">
+				<ol id = "logBox"><li>Logs apear here</li></ol>
+			</div>
+			
+		</div>
+		
+		
+		
+		<div class = "panel" id = "controls">
+
+
+			<div id = "controlConfig">
+			<h3>Svrround I3604K Camera Control</h3>
+			<img style = "background-color: #FFF; border-radius: 50%; transform:scale(0.88);" src = "img/mobileLogo.png" width="48" height="48" />
+			<img src = "img/instahacking.png" width="48" height="48" />
+
+			<p>Camera IP Address</p>
+
+				<input id = "cameraIP" value = "192.168.77.1" placeholder = "192.168.77.1"/>
+				
+				<p>Stream Config</p>
+				
+				<select>
+				  <option value="-1">Select Resolution</option>
+				  <option value="960">960</option>
+				  <option value="1088">1088</option>
+				  <option value="1360">1360</option>
+				  <option value="1440">1440</option>
+				  <option value="1504">1504</option>
+				  <option value="1920">1920</option>
+				</select>
+
+				<br /><br />
+
+				<select>
+				  <option value="-1">Select Bitrate</option>
+				  <option value="5">5</option>
+				  <option value="10">10</option>
+				  <option value="15">15</option>
+				  <option value="20">20</option>
+				  <option value="30">30</option>
+				</select>
+
+			</div>
+			
+			<div id = "controlKeys">
+				<div class = "controlFunc" action = "newTcpConn" id = "startConn">Connect</div>
+
+				<div class = "controlFunc" id = "startStream" action = "start" > Start Stream </div>
+				
+				<div class = "controlFunc" id = "startPreview" action = "start" > Start Preview </div>
+				
+				<div class = "controlFunc" id = "lsFile" > List File </div>
+				
+				<div class = "controlFunc" id = "camInfo" >  Camera Info </div>
+			</div>
+			
+		</div>
+		
+		<div class = "panel" id = "about">
+			
+			Copyright @ Svrround 2016
+			
+		</div>
+		
+		
+	</body>
+	
+</html>
