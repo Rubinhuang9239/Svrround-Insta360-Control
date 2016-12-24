@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var net = require('net');
+var open = require('open');
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -36,7 +37,7 @@ insta.heartTestClock = setInterval(function(){
 						insta.client.write('{"cmd":"heartTest","data":{}}\n');
 					}
 
-				},2000);
+				},10000);
 
 function generateConnection(){
 	if(!insta.client_role){
@@ -65,11 +66,12 @@ function generateConnection(){
 	insta.client = new net.Socket();
 
 	insta.client.on('data', function(data) {
-		console.log('Received: ' + data);
+		if(data != '{"type":"heartTestResult","code":true}\n'){
+			console.log('Received: ' + data);
+		}
+		
 
-		//if(type == "fileList"){
-			//
-		//}
+		frontEnd.emit("info", data.toString());
 	});
 
 	insta.client.on('error', function(error) {
@@ -85,7 +87,7 @@ function generateConnection(){
 	});
 
 	insta.client.on('close', function() {
-		console.log('Connection closed');
+		console.log('TCP Connection closed');
 		insta.tcpConnected = false;
 		frontEnd.emit("tcpConn", false);
 	});
@@ -169,10 +171,10 @@ io.on('connection', function(webSocket){
 
 			if(insta.tcpConnected){
 				if(config.action == "start"){
-					insta.client.write('{"data":{"bitrate":10485760,"width":1440,"height":1440},"cmd":"startLive"}\n');
+					insta.client.write('{"data":{"bitrate":4194304,"width":1440,"height":1440},"cmd":"startLive"}\n');
 					insta.streaming = true;
 				}else if(config.action == "stop"){
-					insta.client.write('{"data":{"bitrate":10485760,"width":1440,"height":1440},"cmd":"stopLive"}\n');
+					insta.client.write('{"data":{"bitrate":4194304,"width":1440,"height":1440},"cmd":"stopLive"}\n');
 					insta.streaming = false;
 				}
 
@@ -207,7 +209,7 @@ io.on('connection', function(webSocket){
 					webSocket.emit("preview", true);
 				}
 				else if(type == "stopPreview"){
-					insta.client.write('{"cmd":"startPreview","data":{}}\n');
+					insta.client.write('{"cmd":"stopPreview","data":{}}\n');
 					insta.preview = false;
 					//change it later
 					webSocket.emit("preview", false);
@@ -221,6 +223,10 @@ io.on('connection', function(webSocket){
 			webSocket.emit("err", "TCP socket not established yet!");
 		}
 
+	});
+
+	webSocket.on("streamwire",function(){
+		open("/Applications/OBS.app");
 	});
 
 

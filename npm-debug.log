@@ -1,0 +1,301 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'open',
+1 verbose cli   '-l' ]
+2 info using npm@4.0.2
+3 info using node@v6.9.1
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly fetchPackageMetaData open
+8 silly fetchNamedPackageData open
+9 silly mapToRegistry name open
+10 silly mapToRegistry using default registry
+11 silly mapToRegistry registry https://registry.npmjs.org/
+12 silly mapToRegistry data Result {
+12 silly mapToRegistry   raw: 'open',
+12 silly mapToRegistry   scope: null,
+12 silly mapToRegistry   escapedName: 'open',
+12 silly mapToRegistry   name: 'open',
+12 silly mapToRegistry   rawSpec: '',
+12 silly mapToRegistry   spec: 'latest',
+12 silly mapToRegistry   type: 'tag' }
+13 silly mapToRegistry uri https://registry.npmjs.org/open
+14 verbose get https://registry.npmjs.org/open not expired, no request
+15 silly install normalizeTree
+16 silly loadCurrentTree Finishing
+17 silly loadIdealTree Starting
+18 silly install loadIdealTree
+19 silly cloneCurrentTree Starting
+20 silly install cloneCurrentTreeToIdealTree
+21 silly cloneCurrentTree Finishing
+22 silly loadShrinkwrap Starting
+23 silly install loadShrinkwrap
+24 silly loadShrinkwrap Finishing
+25 silly loadAllDepsIntoIdealTree Starting
+26 silly install loadAllDepsIntoIdealTree
+27 silly resolveWithNewModule open@0.0.5 checking installable status
+28 silly cache add args [ 'open', null ]
+29 verbose cache add spec open
+30 silly cache add parsed spec Result {
+30 silly cache add   raw: 'open',
+30 silly cache add   scope: null,
+30 silly cache add   escapedName: 'open',
+30 silly cache add   name: 'open',
+30 silly cache add   rawSpec: '',
+30 silly cache add   spec: 'latest',
+30 silly cache add   type: 'tag' }
+31 silly addNamed open@latest
+32 verbose addNamed "latest" is being treated as a dist-tag for open
+33 info addNameTag [ 'open', 'latest' ]
+34 silly mapToRegistry name open
+35 silly mapToRegistry using default registry
+36 silly mapToRegistry registry https://registry.npmjs.org/
+37 silly mapToRegistry data Result {
+37 silly mapToRegistry   raw: 'open',
+37 silly mapToRegistry   scope: null,
+37 silly mapToRegistry   escapedName: 'open',
+37 silly mapToRegistry   name: 'open',
+37 silly mapToRegistry   rawSpec: '',
+37 silly mapToRegistry   spec: 'latest',
+37 silly mapToRegistry   type: 'tag' }
+38 silly mapToRegistry uri https://registry.npmjs.org/open
+39 verbose addNameTag registry:https://registry.npmjs.org/open not in flight; fetching
+40 verbose get https://registry.npmjs.org/open not expired, no request
+41 silly addNameTag next cb for open with tag latest
+42 silly addNamed open@0.0.5
+43 verbose addNamed "0.0.5" is a plain semver version for open
+44 silly cache afterAdd open@0.0.5
+45 verbose afterAdd /Users/rubin/.npm/open/0.0.5/package/package.json not in flight; writing
+46 verbose correctMkdir /Users/rubin/.npm correctMkdir not in flight; initializing
+47 verbose afterAdd /Users/rubin/.npm/open/0.0.5/package/package.json written
+48 silly loadAllDepsIntoIdealTree Finishing
+49 silly loadIdealTree Finishing
+50 silly currentTree Svrround-Insta360-Control
+50 silly currentTree ├── accepts@1.3.3
+50 silly currentTree ├── after@0.8.2
+50 silly currentTree ├── array-flatten@1.1.1
+50 silly currentTree ├── arraybuffer.slice@0.0.6
+50 silly currentTree ├── backo2@1.0.2
+50 silly currentTree ├── base64-arraybuffer@0.1.5
+50 silly currentTree ├── base64id@1.0.0
+50 silly currentTree ├── better-assert@1.0.2
+50 silly currentTree ├── blob@0.0.4
+50 silly currentTree ├── callsite@1.0.0
+50 silly currentTree ├── component-bind@1.0.0
+50 silly currentTree ├── component-emitter@1.1.2
+50 silly currentTree ├── component-inherit@0.0.3
+50 silly currentTree ├── content-disposition@0.5.1
+50 silly currentTree ├── content-type@1.0.2
+50 silly currentTree ├── cookie-signature@1.0.6
+50 silly currentTree ├── cookie@0.3.1
+50 silly currentTree ├── debug@2.2.0
+50 silly currentTree ├── depd@1.1.0
+50 silly currentTree ├── destroy@1.0.4
+50 silly currentTree ├── ee-first@1.1.1
+50 silly currentTree ├── encodeurl@1.0.1
+50 silly currentTree ├─┬ engine.io-client@1.8.2
+50 silly currentTree │ ├── component-emitter@1.2.1
+50 silly currentTree │ ├── debug@2.3.3
+50 silly currentTree │ └── ms@0.7.2
+50 silly currentTree ├── engine.io-parser@1.3.2
+50 silly currentTree ├─┬ engine.io@1.8.2
+50 silly currentTree │ ├── debug@2.3.3
+50 silly currentTree │ └── ms@0.7.2
+50 silly currentTree ├── escape-html@1.0.3
+50 silly currentTree ├── etag@1.7.0
+50 silly currentTree ├── express@4.14.0
+50 silly currentTree ├── finalhandler@0.5.0
+50 silly currentTree ├── forwarded@0.1.0
+50 silly currentTree ├── fresh@0.3.0
+50 silly currentTree ├── has-binary@0.1.7
+50 silly currentTree ├── has-cors@1.1.0
+50 silly currentTree ├── http-errors@1.5.1
+50 silly currentTree ├── indexof@0.0.1
+50 silly currentTree ├── inherits@2.0.3
+50 silly currentTree ├── ipaddr.js@1.1.1
+50 silly currentTree ├── isarray@0.0.1
+50 silly currentTree ├── json3@3.3.2
+50 silly currentTree ├── media-typer@0.3.0
+50 silly currentTree ├── merge-descriptors@1.0.1
+50 silly currentTree ├── methods@1.1.2
+50 silly currentTree ├── mime-db@1.25.0
+50 silly currentTree ├── mime-types@2.1.13
+50 silly currentTree ├── mime@1.3.4
+50 silly currentTree ├── ms@0.7.1
+50 silly currentTree ├── negotiator@0.6.1
+50 silly currentTree ├── object-assign@4.1.0
+50 silly currentTree ├── object-component@0.0.3
+50 silly currentTree ├── on-finished@2.3.0
+50 silly currentTree ├── open@0.0.5
+50 silly currentTree ├── options@0.0.6
+50 silly currentTree ├── parsejson@0.0.3
+50 silly currentTree ├── parseqs@0.0.5
+50 silly currentTree ├── parseuri@0.0.5
+50 silly currentTree ├── parseurl@1.3.1
+50 silly currentTree ├── path-to-regexp@0.1.7
+50 silly currentTree ├── proxy-addr@1.1.2
+50 silly currentTree ├── qs@6.2.0
+50 silly currentTree ├── range-parser@1.2.0
+50 silly currentTree ├── send@0.14.1
+50 silly currentTree ├── serve-static@1.11.1
+50 silly currentTree ├── setprototypeof@1.0.2
+50 silly currentTree ├─┬ socket.io-adapter@0.5.0
+50 silly currentTree │ ├── debug@2.3.3
+50 silly currentTree │ └── ms@0.7.2
+50 silly currentTree ├─┬ socket.io-client@1.7.2
+50 silly currentTree │ ├── component-emitter@1.2.1
+50 silly currentTree │ ├── debug@2.3.3
+50 silly currentTree │ └── ms@0.7.2
+50 silly currentTree ├── socket.io-parser@2.3.1
+50 silly currentTree ├─┬ socket.io@1.7.2
+50 silly currentTree │ ├── debug@2.3.3
+50 silly currentTree │ └── ms@0.7.2
+50 silly currentTree ├── statuses@1.3.1
+50 silly currentTree ├── to-array@0.1.4
+50 silly currentTree ├── type-is@1.6.14
+50 silly currentTree ├── ultron@1.0.2
+50 silly currentTree ├── unpipe@1.0.0
+50 silly currentTree ├── utils-merge@1.0.0
+50 silly currentTree ├── vary@1.1.0
+50 silly currentTree ├── ws@1.1.1
+50 silly currentTree ├── wtf-8@1.0.0
+50 silly currentTree ├── xmlhttprequest-ssl@1.5.3
+50 silly currentTree └── yeast@0.1.2
+51 silly idealTree Svrround-Insta360-Control
+51 silly idealTree ├── accepts@1.3.3
+51 silly idealTree ├── after@0.8.2
+51 silly idealTree ├── array-flatten@1.1.1
+51 silly idealTree ├── arraybuffer.slice@0.0.6
+51 silly idealTree ├── backo2@1.0.2
+51 silly idealTree ├── base64-arraybuffer@0.1.5
+51 silly idealTree ├── base64id@1.0.0
+51 silly idealTree ├── better-assert@1.0.2
+51 silly idealTree ├── blob@0.0.4
+51 silly idealTree ├── callsite@1.0.0
+51 silly idealTree ├── component-bind@1.0.0
+51 silly idealTree ├── component-emitter@1.1.2
+51 silly idealTree ├── component-inherit@0.0.3
+51 silly idealTree ├── content-disposition@0.5.1
+51 silly idealTree ├── content-type@1.0.2
+51 silly idealTree ├── cookie-signature@1.0.6
+51 silly idealTree ├── cookie@0.3.1
+51 silly idealTree ├── debug@2.2.0
+51 silly idealTree ├── depd@1.1.0
+51 silly idealTree ├── destroy@1.0.4
+51 silly idealTree ├── ee-first@1.1.1
+51 silly idealTree ├── encodeurl@1.0.1
+51 silly idealTree ├─┬ engine.io-client@1.8.2
+51 silly idealTree │ ├── component-emitter@1.2.1
+51 silly idealTree │ ├── debug@2.3.3
+51 silly idealTree │ └── ms@0.7.2
+51 silly idealTree ├── engine.io-parser@1.3.2
+51 silly idealTree ├─┬ engine.io@1.8.2
+51 silly idealTree │ ├── debug@2.3.3
+51 silly idealTree │ └── ms@0.7.2
+51 silly idealTree ├── escape-html@1.0.3
+51 silly idealTree ├── etag@1.7.0
+51 silly idealTree ├── express@4.14.0
+51 silly idealTree ├── finalhandler@0.5.0
+51 silly idealTree ├── forwarded@0.1.0
+51 silly idealTree ├── fresh@0.3.0
+51 silly idealTree ├── has-binary@0.1.7
+51 silly idealTree ├── has-cors@1.1.0
+51 silly idealTree ├── http-errors@1.5.1
+51 silly idealTree ├── indexof@0.0.1
+51 silly idealTree ├── inherits@2.0.3
+51 silly idealTree ├── ipaddr.js@1.1.1
+51 silly idealTree ├── isarray@0.0.1
+51 silly idealTree ├── json3@3.3.2
+51 silly idealTree ├── media-typer@0.3.0
+51 silly idealTree ├── merge-descriptors@1.0.1
+51 silly idealTree ├── methods@1.1.2
+51 silly idealTree ├── mime-db@1.25.0
+51 silly idealTree ├── mime-types@2.1.13
+51 silly idealTree ├── mime@1.3.4
+51 silly idealTree ├── ms@0.7.1
+51 silly idealTree ├── negotiator@0.6.1
+51 silly idealTree ├── object-assign@4.1.0
+51 silly idealTree ├── object-component@0.0.3
+51 silly idealTree ├── on-finished@2.3.0
+51 silly idealTree ├── open@0.0.5
+51 silly idealTree ├── options@0.0.6
+51 silly idealTree ├── parsejson@0.0.3
+51 silly idealTree ├── parseqs@0.0.5
+51 silly idealTree ├── parseuri@0.0.5
+51 silly idealTree ├── parseurl@1.3.1
+51 silly idealTree ├── path-to-regexp@0.1.7
+51 silly idealTree ├── proxy-addr@1.1.2
+51 silly idealTree ├── qs@6.2.0
+51 silly idealTree ├── range-parser@1.2.0
+51 silly idealTree ├── send@0.14.1
+51 silly idealTree ├── serve-static@1.11.1
+51 silly idealTree ├── setprototypeof@1.0.2
+51 silly idealTree ├─┬ socket.io-adapter@0.5.0
+51 silly idealTree │ ├── debug@2.3.3
+51 silly idealTree │ └── ms@0.7.2
+51 silly idealTree ├─┬ socket.io-client@1.7.2
+51 silly idealTree │ ├── component-emitter@1.2.1
+51 silly idealTree │ ├── debug@2.3.3
+51 silly idealTree │ └── ms@0.7.2
+51 silly idealTree ├── socket.io-parser@2.3.1
+51 silly idealTree ├─┬ socket.io@1.7.2
+51 silly idealTree │ ├── debug@2.3.3
+51 silly idealTree │ └── ms@0.7.2
+51 silly idealTree ├── statuses@1.3.1
+51 silly idealTree ├── to-array@0.1.4
+51 silly idealTree ├── type-is@1.6.14
+51 silly idealTree ├── ultron@1.0.2
+51 silly idealTree ├── unpipe@1.0.0
+51 silly idealTree ├── utils-merge@1.0.0
+51 silly idealTree ├── vary@1.1.0
+51 silly idealTree ├── ws@1.1.1
+51 silly idealTree ├── wtf-8@1.0.0
+51 silly idealTree ├── xmlhttprequest-ssl@1.5.3
+51 silly idealTree └── yeast@0.1.2
+52 silly generateActionsToTake Starting
+53 silly install generateActionsToTake
+54 warn checkPermissions Missing write access to /Users/rubin/Svrround-Insta360-Control/node_modules
+55 silly rollbackFailedOptional Starting
+56 silly rollbackFailedOptional Finishing
+57 silly runTopLevelLifecycles Finishing
+58 silly install printInstalled
+59 warn enoent ENOENT: no such file or directory, open '/Users/rubin/Svrround-Insta360-Control/package.json'
+60 verbose enoent ENOENT: no such file or directory, open '/Users/rubin/Svrround-Insta360-Control/package.json'
+60 verbose enoent This is most likely not a problem with npm itself
+60 verbose enoent and is related to npm not being able to find a file.
+61 warn Svrround-Insta360-Control No description
+62 verbose If you need help, you may report this error at:
+62 verbose     <https://github.com/npm/npm/issues>
+63 warn Svrround-Insta360-Control No repository field.
+64 verbose If you need help, you may report this error at:
+64 verbose     <https://github.com/npm/npm/issues>
+65 warn Svrround-Insta360-Control No README data
+66 verbose If you need help, you may report this error at:
+66 verbose     <https://github.com/npm/npm/issues>
+67 warn Svrround-Insta360-Control No license field.
+68 verbose If you need help, you may report this error at:
+68 verbose     <https://github.com/npm/npm/issues>
+69 verbose stack Error: EACCES: permission denied, access '/Users/rubin/Svrround-Insta360-Control/node_modules'
+69 verbose stack     at Error (native)
+70 verbose cwd /Users/rubin/Svrround-Insta360-Control
+71 error Darwin 16.1.0
+72 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "install" "open" "-l"
+73 error node v6.9.1
+74 error npm  v4.0.2
+75 error path /Users/rubin/Svrround-Insta360-Control/node_modules
+76 error code EACCES
+77 error errno -13
+78 error syscall access
+79 error Error: EACCES: permission denied, access '/Users/rubin/Svrround-Insta360-Control/node_modules'
+79 error     at Error (native)
+79 error  { Error: EACCES: permission denied, access '/Users/rubin/Svrround-Insta360-Control/node_modules'
+79 error     at Error (native)
+79 error   errno: -13,
+79 error   code: 'EACCES',
+79 error   syscall: 'access',
+79 error   path: '/Users/rubin/Svrround-Insta360-Control/node_modules' }
+80 error Please try running this command again as root/Administrator.
+81 verbose exit [ -13, true ]

@@ -8,7 +8,7 @@ var socketPromiss = function checkSocket(){
 				checkSocket();
 			}
 			else{
-				console.log(socket.id);
+				webConsole.logMsg("Interface Web Socket ready!");
 			}
 		},10);
 }
@@ -49,10 +49,12 @@ socket.on("tcpConn",function(connection){
 		connectBtn.innerHTML = "Disconnect";
 		connectBtn.attributes.action.value = "disTcpConn";
 		webConsole.logConnection("Opened");
+		animate.leds.turn(animate.leds.connection,"on");
 	}else if(connection === false){
 		connectBtn.innerHTML = "Connect";
 		connectBtn.attributes.action.value = "newTcpConn";
-		webConsole.logConnection("Closed")
+		webConsole.logConnection("Closed");
+		animate.leds.turn(animate.leds.connection,"off");
 	}
 });
 
@@ -64,10 +66,12 @@ socket.on("tcpStream",function(stream){
 		streamBtn.innerHTML = "Stop Stream";
 		streamBtn.attributes.action.value = "stop";
 		webConsole.logConnection("Stream start emit");
+		animate.leds.turn(animate.leds.stream,"on");
 	}else if(stream === false){
 		streamBtn.innerHTML = "Start Stream";
 		streamBtn.attributes.action.value = "start";
-		webConsole.logConnection("Stream stop emit")
+		webConsole.logConnection("Stream stop emit");
+		animate.leds.turn(animate.leds.stream,"off");
 	}
 });
 
@@ -80,9 +84,81 @@ socket.on("preview",function(preview){
 		previewBtn.innerHTML = "Stop Preview";
 		previewBtn.attributes.action.value = "stop";
 		webConsole.logConnection("Preview start emit");
-	}else if(stream === false){
+		animate.leds.turn(animate.leds.preview,"on");
+	}else if(preview === false){
 		previewBtn.innerHTML = "Start Preview";
 		previewBtn.attributes.action.value = "start";
-		webConsole.logConnection("Preview stop emit")
+		webConsole.logConnection("Preview stop emit");
+		animate.leds.turn(animate.leds.preview,"off");
 	}
+});
+
+socket.on("info",function(info){
+
+
+	info = info.split("\n");
+
+	for(i = 0; i < info.length - 1; i++){
+
+		var parseInfo = JSON.parse(info[i]);
+
+		//console.log(parseInfo);
+
+		if(parseInfo.type == "fileList"){
+
+
+			var fileList = parseInfo.data.fileList;
+
+			var fileSysBox = document.getElementById("fileSys");
+
+			fileSysBox.innerHTML = "";
+
+			for(i = 0; i < fileList.length; i++){
+				var currentFile = fileList[i];
+				//console.log(currentFile);
+				webConsole.logMsg( currentFile.name + " [size: " + currentFile.size + "]" );
+
+				if ( currentFile.name.indexOf(".insv") >= 0 || currentFile.name.indexOf(".insp") >=0 ){
+
+					var newFileBox = document.createElement("div");
+					newFileBox.innerHTML = "<p>" + currentFile.name + "<br />Size: " + Math.round(currentFile.size * 10 / 1048576) /10 + "M" 
+										  +"<span> <a target='_blank' href='http://" + "192.168.77.1" + ":8000/" + currentFile.name + "'>Download</a></span>"
+									      +"</p>"
+
+					if ( currentFile.name.indexOf(".insp") >= 0 ){
+						newFileBox.innerHTML += "<img src = 'http://" + "192.168.77.1" + ":8000/" + currentFile.name + "' />";
+					}
+					else if( currentFile.name.indexOf(".insv") >= 0 ){
+						newFileBox.innerHTML += "<img src = 'img/360video.jpg' />";
+					}
+
+
+					fileSysBox.append(newFileBox);
+				}
+
+			}
+		}
+
+		else if(parseInfo.type == "prepareOK"){
+
+			if(parseInfo.data.mode == 3){
+				animate.addShortCut("rtmp","192.168.77.1");
+				webConsole.logSucsses("ready to view RTMP STREAM in OBS!");
+			}
+			else if(parseInfo.data.mode == 9){
+				animate.addShortCut("rtsp","192.168.77.1");
+				webConsole.logSucsses("ready to view RTSP PREVIEW in OBS!");
+			}
+
+			
+		}
+
+
+	}
+
+	
+
+		//
+
+
 });

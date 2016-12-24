@@ -38,10 +38,6 @@
 			float: left;
 			margin-right: 5px;
 		}
-
-		#connection .led{
-			background-color: #FA0;
-		}
 		
 		#preview{
 			position:absolute;
@@ -51,18 +47,43 @@
 			width:50%;
 		}
 		
-		#previewImg{
+		#fileSys{
 			width: 100%;
 			height: 100%;
-			background-color: #000;
+			background-color: #333;
 			border-radius: 4px;
-			background-image: url("img/coverImg.png");
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: contain;
-			overflow: hidden;
+			overflow-x: hidden;
+			overflow-y: scroll;
 		}
 
+		#fileSys div{
+			box-sizing: border-box;
+			margin-top: 4px;
+			background-color: rgba(255,255,255,0.25);
+			color: #FFF;
+			height: 72px;
+			width:100%;
+		}
+
+		#fileSys div img{
+			height: 100%;
+			width: 144px;
+			background-color: #FF9900;
+			margin-top:-72px;
+		}
+
+		#fileSys div p{
+			height: 100%;
+			width: auto;
+			box-sizing: border-box;
+			margin: 0px;
+			padding: 5px;
+			padding-left: 149px; 
+		}
+
+		#fileSys a{
+			color: #FFCC00;
+		}
 		
 		#indication{
 			position:absolute;
@@ -116,6 +137,25 @@
 			color: #FB0;
 			width: 100%;
 			padding: 0px;
+		}
+
+		.sucLog{
+			color: #0F0;
+			width: 100%;
+			padding: 0px;
+		}
+
+		.shortCutBtn{
+			background-color: #FF9900;
+			color: #FFF;
+			border-radius: 5px;
+			cursor: pointer;
+			padding: 5px;
+			box-sizing: border-box;
+			transition:opacity 0.25s ease-in-out;
+		}
+		.shortCutBtn:hover{
+			opacity: 0.85;
 		}
 
 		#cameraIP{
@@ -217,6 +257,7 @@
 	</style>
 		
 	<script src = "js/socket.io.js"></script>
+	<script src = "js/clipboard.min.js"></script>
 	<script src = "js/socket.js"></script>
 	<script src = "js/animate.js"></script>
 		
@@ -241,7 +282,22 @@
 		
 		<div class = "panel" id = "preview">
 			
-			<img id = "previewImg" />
+			<div id = "fileSys">
+
+			<!-- <div><p>hihidsfdsgfdgdfgdfgdfgdfgdfgdfgdfghi</p><img class = "fileTnImg" /></div>
+			<div><p>hihihi</p><img class = "fileTnImg" /></div>
+			<div><p>hihihi</p><img class = "fileTnImg" /></div>
+			<div><p>hihihi</p></div>
+			<div>hihihi</div>
+			<div>hihihi</div>
+			<div>hihihi</div>
+			<div>hihihi</div>
+			<div>hihihi</div>
+			<div>hihihi</div>
+			<div>hihihi</div>
+			<div>hihihi</div> -->
+				
+			</div>
 			
 			
 		</div>
@@ -251,13 +307,13 @@
 			
 			<div id = "indicatorBox">
 				<div class = "Indicators" id = "connection">
-					<div class = "led"></div>connection
+					<div id="conLed" class = "led"></div>connection
 				</div>
 				<div class = "Indicators" id = "streaming">
-					<div class = "led"></div>streaming
+					<div id="strLed" class = "led"></div>streaming
 				</div>
 				<div class = "Indicators" id = "previewing">
-					<div class = "led"></div>previewing
+					<div id="preLed" class = "led"></div>previewing
 				</div>
 
 			</div>
@@ -280,7 +336,7 @@
 
 			<p>Camera IP Address</p>
 
-				<input id = "cameraIP" value = "192.168.77.1" placeholder = "192.168.77.1"/>
+				<input id = "cameraIP" value = "192.168.77.1" placeholder = "Camera IP Address"/>
 				
 				<p>Stream Config</p>
 				
@@ -323,7 +379,7 @@
 		
 		<div class = "panel" id = "about">
 			
-			Copyright @ Svrround 2016
+			Copyright @ Svrround 2017
 			
 		</div>
 		
