@@ -12,6 +12,14 @@
 			background: #222;
 			font-family: helvetica;
 		}
+
+		#container{
+			height:100%;
+			position: relative;
+			margin: 0px;
+			padding: 0px;
+			min-width: 640px !important;
+		}
 		
 		.panel{
 			width: 100%;
@@ -37,6 +45,23 @@
 			border-radius: 50%;
 			float: left;
 			margin-right: 5px;
+		}
+
+		/*-------Pending_Flash-------*/
+
+		@keyframes pendingFlash {
+		    0%   {background-color: #555;}
+		    50%  {background-color: #FA0;}
+		    100% {background-color: #555;}
+		}
+
+		/*---------------------------*/
+
+
+		.ledPending{
+			animation-name: pendingFlash;
+		    animation-duration: 1.5s;
+		    animation-iteration-count: infinite;
 		}
 		
 		#preview{
@@ -279,108 +304,115 @@
 	
 	<body>
 		
-		
-		<div class = "panel" id = "preview">
+		<div id = "container">
 			
-			<div id = "fileSys">
-
-			<!-- <div><p>hihidsfdsgfdgdfgdfgdfgdfgdfgdfgdfghi</p><img class = "fileTnImg" /></div>
-			<div><p>hihihi</p><img class = "fileTnImg" /></div>
-			<div><p>hihihi</p><img class = "fileTnImg" /></div>
-			<div><p>hihihi</p></div>
-			<div>hihihi</div>
-			<div>hihihi</div>
-			<div>hihihi</div>
-			<div>hihihi</div>
-			<div>hihihi</div>
-			<div>hihihi</div>
-			<div>hihihi</div>
-			<div>hihihi</div> -->
+			<div class = "panel" id = "preview">
 				
-			</div>
-			
-			
-		</div>
-		
-		<div class = "panel" id = "indication">
-			<p class = "panelHeaders">Indicators</p>
-			
-			<div id = "indicatorBox">
-				<div class = "Indicators" id = "connection">
-					<div id="conLed" class = "led"></div>connection
+				<div id = "fileSys">
+
+				<!-- <div><p>hihidsfdsgfdgdfgdfgdfgdfgdfgdfgdfghi</p><img class = "fileTnImg" /></div>
+				<div><p>hihihi</p><img class = "fileTnImg" /></div>
+				<div><p>hihihi</p><img class = "fileTnImg" /></div>
+				<div><p>hihihi</p></div>
+				<div>hihihi</div>
+				<div>hihihi</div>
+				<div>hihihi</div>
+				<div>hihihi</div>
+				<div>hihihi</div>
+				<div>hihihi</div>
+				<div>hihihi</div>
+				<div>hihihi</div> -->
+					
 				</div>
-				<div class = "Indicators" id = "streaming">
-					<div id="strLed" class = "led"></div>streaming
+				
+				
+			</div>
+			
+			<div class = "panel" id = "indication">
+				<p class = "panelHeaders">Indicators</p>
+				
+				<div id = "indicatorBox">
+					<div class = "Indicators" id = "connection">
+						<div id="conLed" class = "led"></div>connection
+					</div>
+					<div class = "Indicators" id = "streaming">
+						<div id="strLed" class = "led"></div>streaming
+					</div>
+					<div class = "Indicators" id = "previewing">
+						<div id="preLed" class = "led"></div>previewing
+					</div>
+
 				</div>
-				<div class = "Indicators" id = "previewing">
-					<div id="preLed" class = "led"></div>previewing
+					
+				<div id = "terminal">
+					<ol id = "logBox"><li>Logs apear here</li></ol>
 				</div>
-
-			</div>
 				
-			<div id = "terminal">
-				<ol id = "logBox"><li>Logs apear here</li></ol>
 			</div>
 			
-		</div>
-		
-		
-		
-		<div class = "panel" id = "controls">
+			
+			
+			<div class = "panel" id = "controls">
 
 
-			<div id = "controlConfig">
-			<h3>Svrround I3604K Camera Control</h3>
-			<img style = "background-color: #FFF; border-radius: 50%; transform:scale(0.88);" src = "img/mobileLogo.png" width="48" height="48" />
-			<img src = "img/instahacking.png" width="48" height="48" />
+				<div id = "controlConfig">
+				<h3>Svrround I3604K Camera Control</h3>
+				<img style = "background-color: #FFF; border-radius: 50%; transform:scale(0.88);" src = "img/mobileLogo.png" width="48" height="48" />
+				<img src = "img/instahacking.png" width="48" height="48" />
 
-			<p>Camera IP Address</p>
+				<p>Camera IP Address</p>
 
-				<input id = "cameraIP" value = "192.168.77.1" placeholder = "Camera IP Address"/>
+					<input id = "cameraIP" value = "192.168.77.1" placeholder = "Camera IP Address"/>
+					
+					<p>Stream Config</p>
+					
+					<select id = "resSelect">
+					  <option value="-1">Select Resolution</option>
+					  <option value="960">960</option>
+					  <option value="1088">1088</option>
+					  <option value="1360">1360</option>
+					  <option value="1440">1440</option>
+					  <option value="1504">1504</option>
+					  <option value="1920">1920</option>
+					</select>
+
+					<br /><br />
+
+					<select id = "bitSelect">
+					  <option value="-1">Select Bitrate</option>
+					  <option value="3145728">3 (Min/Wifi)</option>
+					  <option value="4194304">4 (Low/Wifi/Eth)</option>
+					  <option value="5242800">5 (Med/Wifi/Eth)</option>
+					  <option value="6291456">6 (Med/Eth)</option>
+					  <option value="8388608">8 (Med/Eth)</option>
+					  <option value="10485760">10 (High/Eth)</option>
+					  <option value="12582912">12 (High/Eth)</option>
+					  <option value="15728640">16 (Very High)</option>
+					  <option value="20971520">20 (Very High)</option>
+					</select>
+
+				</div>
 				
-				<p>Stream Config</p>
+				<div id = "controlKeys">
+					<div class = "controlFunc" action = "newTcpConn" id = "startConn">Connect</div>
+
+					<div class = "controlFunc" id = "startStream" action = "start" > Start Stream </div>
+					
+					<div class = "controlFunc" id = "startPreview" action = "start" > Start Preview </div>
+					
+					<div class = "controlFunc" id = "lsFile" > List File </div>
+					
+					<div class = "controlFunc" id = "camInfo" >  Camera Info </div>
+				</div>
 				
-				<select>
-				  <option value="-1">Select Resolution</option>
-				  <option value="960">960</option>
-				  <option value="1088">1088</option>
-				  <option value="1360">1360</option>
-				  <option value="1440">1440</option>
-				  <option value="1504">1504</option>
-				  <option value="1920">1920</option>
-				</select>
-
-				<br /><br />
-
-				<select>
-				  <option value="-1">Select Bitrate</option>
-				  <option value="5">5</option>
-				  <option value="10">10</option>
-				  <option value="15">15</option>
-				  <option value="20">20</option>
-				  <option value="30">30</option>
-				</select>
-
 			</div>
 			
-			<div id = "controlKeys">
-				<div class = "controlFunc" action = "newTcpConn" id = "startConn">Connect</div>
-
-				<div class = "controlFunc" id = "startStream" action = "start" > Start Stream </div>
+			<div class = "panel" id = "about">
 				
-				<div class = "controlFunc" id = "startPreview" action = "start" > Start Preview </div>
+				Copyright @ Svrround 2017
 				
-				<div class = "controlFunc" id = "lsFile" > List File </div>
-				
-				<div class = "controlFunc" id = "camInfo" >  Camera Info </div>
 			</div>
-			
-		</div>
-		
-		<div class = "panel" id = "about">
-			
-			Copyright @ Svrround 2017
-			
+
 		</div>
 		
 		

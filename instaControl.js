@@ -104,6 +104,8 @@ io.on('connection', function(webSocket){
 	frontEnd = webSocket;
 
 	webSocket.emit("tcpConn", insta.tcpConnected);
+	// webSocket.emit("preview", insta.tcpConnected);
+	// webSocket.emit("tcpStream", insta.tcpConnected);
 
 	console.log(webSocket.id + " connected!");
 
@@ -162,6 +164,7 @@ io.on('connection', function(webSocket){
 	// 15: 15728640;
 	// 20: 20971520;
 	// 30: 31457280;
+	// 4: 4194304
 								
 	//Takes 5s to set up the rtmp stream
 	// client.write('{"data":{"key":"defaultOffset"},"cmd":"queryOffset"}\n');
@@ -171,10 +174,11 @@ io.on('connection', function(webSocket){
 
 			if(insta.tcpConnected){
 				if(config.action == "start"){
-					insta.client.write('{"data":{"bitrate":4194304,"width":1440,"height":1440},"cmd":"startLive"}\n');
+					console.log(config.bit,config.res)
+					insta.client.write('{"data":{"bitrate":' + config.bit + ',"width":' + config.res + ',"height":' + config.res + '},"cmd":"startLive"}\n');
 					insta.streaming = true;
 				}else if(config.action == "stop"){
-					insta.client.write('{"data":{"bitrate":4194304,"width":1440,"height":1440},"cmd":"stopLive"}\n');
+					insta.client.write('{"data":{},"cmd":"stopLive"}\n');
 					insta.streaming = false;
 				}
 
@@ -251,16 +255,6 @@ io.on('connection', function(webSocket){
 
 				insta.client.write('{"data":{"bitrate":10485760,"width":1440,"height":1440},"cmd":"startLive"}\n');
 
-				//Bitrate_Settings//
-				//  5: 5242880;
-				// 10: 10485760;
-				// 15: 15728640;
-				// 20: 20971520;
-				// 30: 31457280;
-								
-				//Takes 5s to set up the rtmp stream
-				// client.write('{"data":{"key":"defaultOffset"},"cmd":"queryOffset"}\n');
-				// client.write('{"data":{"index":1},"cmd":"queryCamera"}\n');
 				
 				setTimeout(function(){
 					insta.client.write('{"data":{"bitrate":10485760,"width":1440,"height":1440},"cmd":"stopLive"}\n');

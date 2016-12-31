@@ -26,10 +26,12 @@ socket.on("err",function(err){
 
 		if(streamBtn.innerHTML == "Requesting"){
 			streamBtn.innerHTML = "Start Stream";
+			animate.leds.turn(animate.leds.stream,"off");
 		}
 
 		if(previewBtn.innerHTML == "Requesting"){
 			previewBtn.innerHTML = "Start Preview";
+			animate.leds.turn(animate.leds.preview,"off");
 		}
 	}
 
@@ -66,7 +68,6 @@ socket.on("tcpStream",function(stream){
 		streamBtn.innerHTML = "Stop Stream";
 		streamBtn.attributes.action.value = "stop";
 		webConsole.logConnection("Stream start emit");
-		animate.leds.turn(animate.leds.stream,"on");
 	}else if(stream === false){
 		streamBtn.innerHTML = "Start Stream";
 		streamBtn.attributes.action.value = "start";
@@ -84,7 +85,6 @@ socket.on("preview",function(preview){
 		previewBtn.innerHTML = "Stop Preview";
 		previewBtn.attributes.action.value = "stop";
 		webConsole.logConnection("Preview start emit");
-		animate.leds.turn(animate.leds.preview,"on");
 	}else if(preview === false){
 		previewBtn.innerHTML = "Start Preview";
 		previewBtn.attributes.action.value = "start";
@@ -144,10 +144,12 @@ socket.on("info",function(info){
 			if(parseInfo.data.mode == 3){
 				animate.addShortCut("rtmp","192.168.77.1");
 				webConsole.logSucsses("ready to view RTMP STREAM in OBS!");
+				animate.leds.turn(animate.leds.stream,"on");
 			}
 			else if(parseInfo.data.mode == 9){
 				animate.addShortCut("rtsp","192.168.77.1");
 				webConsole.logSucsses("ready to view RTSP PREVIEW in OBS!");
+				animate.leds.turn(animate.leds.preview,"on");
 			}
 
 			

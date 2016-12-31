@@ -16,11 +16,34 @@ animate.init = function(){
 
 		var config = {};
 
+		config.res = parseInt(document.getElementById("resSelect").value); //resolution
+		config.bit = parseInt(document.getElementById("bitSelect").value); //bitrate
+
+		//check config
+
+
+
+		if(config.res == -1){
+			socket.emit("stream", false );
+			webConsole.logError("Please choose a legal resolution");
+			return false;
+		}
+
+		if(config.res == -1){
+			socket.emit("stream", false );
+			webConsole.logError("Please choose a legal bitrate");
+			return false;
+		}
+
+
+
 		config.action = streamBtn.attributes.action.value;
  
 		socket.emit("stream", config );
 
 		streamBtn.innerHTML = "Requesting";
+
+		animate.leds.turn(animate.leds.stream,"pending");
 
 	});
 
@@ -47,6 +70,8 @@ animate.init = function(){
 
 		previewBtn.innerHTML = "Requesting";
 
+		animate.leds.turn(animate.leds.preview,"pending");
+
 	});
 
 
@@ -64,9 +89,14 @@ animate.init = function(){
 
 	animate.leds.turn = function(led, status){
 		if(status == "on"){
-			led.style.backgroundColor = "#FA0";
+			led.className = "led";
+			led.style.backgroundColor = "#3F4";
+		}
+		else if(status == "pending"){
+			led.className = "led ledPending";
 		}
 		else if(status == "off"){
+			led.className = "led";
 			led.style.backgroundColor = "#555";
 		}
 
