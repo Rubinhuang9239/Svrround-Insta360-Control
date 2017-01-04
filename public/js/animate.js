@@ -204,3 +204,7 @@ webConsole.logMsg = function(msg, option){
 	webConsole.logBox.scrollTop = webConsole.logBox.scrollHeight;
 
 }
+
+instaCache = {
+	ipAddress: "192.168.77.1",
+};

@@ -144,13 +144,11 @@ io.on('connection', function(webSocket){
 			insta.tcpConnected = false;
 
 			console.log("disconnected TCP Socket");
-			//webSocket.emit('tcpConn',false);
 
 
 		}else{
 			insta.tcpConnected = false;
 			webSocket.emit("err", "TCP socket not connected yet!");
-			//webSocket.emit('tcpConn',false);
 		}
 
 
@@ -242,26 +240,29 @@ io.on('connection', function(webSocket){
 
 		insta.client.connect(8888, ipaddress, function() {
 			insta.tcpConnected = true;
-			//console.log("HI");
 
-			if(insta.client_role == "liveKit"){
-				console.log('Connected_As_LiveKit');
+			insta.tcpIpAddress = ipaddress;
 
-				var date = new Date();
 
-				var formedTime = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + " " 
-				+ date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-				console.log("Hacking starts at" + formedTime + "\n");
+			// if(insta.client_role == "liveKit"){
+			// 	console.log('Connected_As_LiveKit');
 
-				insta.client.write('{"data":{"bitrate":10485760,"width":1440,"height":1440},"cmd":"startLive"}\n');
+			// 	var date = new Date();
+
+			// 	var formedTime = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + " " 
+			// 	+ date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+			// 	console.log("Hacking starts at" + formedTime + "\n");
+
+			// 	insta.client.write('{"data":{"bitrate":10485760,"width":1440,"height":1440},"cmd":"startLive"}\n');
 
 				
-				setTimeout(function(){
-					insta.client.write('{"data":{"bitrate":10485760,"width":1440,"height":1440},"cmd":"stopLive"}\n');
-				},10000);
+			// 	setTimeout(function(){
+			// 		insta.client.write('{"data":{"bitrate":10485760,"width":1440,"height":1440},"cmd":"stopLive"}\n');
+			// 	},10000);
 
-			}
-			else if(insta.client_role == "iOS"){
+			// }
+			// else 
+			if(insta.client_role == "iOS"){
 				console.log('Connected_As_iOS');
 
 				var date = new Date();
@@ -275,13 +276,12 @@ io.on('connection', function(webSocket){
 				insta.client.write('{"cmd":"queryVersion","data":{}}\n');
 				insta.client.write('{"cmd":"queryID","data":{}}\n');
 				insta.client.write('{"cmd":"queryStatistic","data":{}}\n');
-
-
 			}
+
+			webSocket.emit('tcpIp', insta.tcpIpAddress);
+			webSocket.emit('tcpConn',true);
+
 		});
-
-
-		webSocket.emit('tcpConn',true);
 
 	}
 

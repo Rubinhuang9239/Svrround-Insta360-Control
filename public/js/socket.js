@@ -60,6 +60,11 @@ socket.on("tcpConn",function(connection){
 	}
 });
 
+socket.on("tcpIp", function(ipAddress){
+	instaCache.ipAddress = ipAddress;
+	webConsole.logMsg("Current Camera IP Address <br/>" + ipAddress);
+});
+
 socket.on("tcpStream",function(stream){
 
 	var streamBtn = document.getElementById("startStream");
@@ -122,11 +127,11 @@ socket.on("info",function(info){
 
 					var newFileBox = document.createElement("div");
 					newFileBox.innerHTML = "<p>" + currentFile.name + "<br />Size: " + Math.round(currentFile.size * 10 / 1048576) /10 + "M" 
-										  +"<span> <a target='_blank' href='http://" + "192.168.77.1" + ":8000/" + currentFile.name + "'>Download</a></span>"
+										  +"<span> <a target='_blank' href='http://" + instaCache.ipAddress + ":8000/" + currentFile.name + "'>Download</a></span>"
 									      +"</p>"
 
 					if ( currentFile.name.indexOf(".insp") >= 0 ){
-						newFileBox.innerHTML += "<img src = 'http://" + "192.168.77.1" + ":8000/" + currentFile.name + "' />";
+						newFileBox.innerHTML += "<img src = 'http://" + instaCache.ipAddress + ":8000/" + currentFile.name + "' />";
 					}
 					else if( currentFile.name.indexOf(".insv") >= 0 ){
 						newFileBox.innerHTML += "<img src = 'img/360video.jpg' />";
@@ -142,12 +147,12 @@ socket.on("info",function(info){
 		else if(parseInfo.type == "prepareOK"){
 
 			if(parseInfo.data.mode == 3){
-				animate.addShortCut("rtmp","192.168.77.1");
+				animate.addShortCut("rtmp", instaCache.ipAddress);
 				webConsole.logSucsses("ready to view RTMP STREAM in OBS!");
 				animate.leds.turn(animate.leds.stream,"on");
 			}
 			else if(parseInfo.data.mode == 9){
-				animate.addShortCut("rtsp","192.168.77.1");
+				animate.addShortCut("rtsp", instaCache.ipAddress);
 				webConsole.logSucsses("ready to view RTSP PREVIEW in OBS!");
 				animate.leds.turn(animate.leds.preview,"on");
 			}
