@@ -102,6 +102,8 @@ animate.init = function(){
 
 	}
 
+	animate.initSlideInput();
+
 	webConsole.init();
 	animate.initClipBoard();
 }
@@ -137,6 +139,30 @@ animate.addShortCut = function(type, ip){
 		socket.emit("streamwire", true);
 
 	})
+
+}
+
+animate.initSlideInput = function(){
+
+	console.log("hey");
+
+	var slideList = document.getElementsByClassName("slide");
+
+	for(i = 0; i < slideList.length; i++){
+		slideList[i].addEventListener("input",function(e){
+			//console.log(e.target.id);
+
+			var config = {
+				property : e.target.id,
+				value : e.target.value
+			}
+
+			var currentSliderDisplay = document.getElementById(e.target.id + "Dis");
+			currentSliderDisplay.innerHTML = e.target.value;
+
+			socket.emit("camSetting", config);
+		})
+	}
 
 }
 

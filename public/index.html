@@ -186,7 +186,7 @@
 		#cameraIP{
 			border-radius: 4px;
 			width: 100%;
-			min-width: 240px;
+			min-width: 150px;
 			padding: 4px;
 			font-size: 1em;
 			line-height: 1.5em;
@@ -196,7 +196,7 @@
 
 		select{
 			width: 100%;
-			min-width: 240px;
+			min-width: 150px;
 			font-size: 1em;
 			line-height: 1.25em;
 			background-color: #444;
@@ -209,10 +209,27 @@
 			padding: 10px;
 			box-sizing: border-box;
 			position: absolute;
-			width: 50%;
-			height: 300px;
+			width: 25%;
+			min-height: 300px;
 			top:0px;
 			left: 0px;
+		}
+
+		#controlSlider{
+			padding: 10px;
+			box-sizing: border-box;
+			position: absolute;
+			width: 25%;
+			min-height: 300px;
+			top:0px;
+			left: 25%;
+		}
+
+		#controlSlider .slide{
+			width: 100%;
+			height: 20px;
+			padding-top: 5px;
+			padding-bottom: 5px;
 		}
 
 		#controlKeys{
@@ -309,22 +326,8 @@
 			<div class = "panel" id = "preview">
 				
 				<div id = "fileSys">
-
-				<!-- <div><p>hihidsfdsgfdgdfgdfgdfgdfgdfgdfgdfghi</p><img class = "fileTnImg" /></div>
-				<div><p>hihihi</p><img class = "fileTnImg" /></div>
-				<div><p>hihihi</p><img class = "fileTnImg" /></div>
-				<div><p>hihihi</p></div>
-				<div>hihihi</div>
-				<div>hihihi</div>
-				<div>hihihi</div>
-				<div>hihihi</div>
-				<div>hihihi</div>
-				<div>hihihi</div>
-				<div>hihihi</div>
-				<div>hihihi</div> -->
 					
 				</div>
-				
 				
 			</div>
 			
@@ -354,42 +357,64 @@
 			
 			<div class = "panel" id = "controls">
 
-
 				<div id = "controlConfig">
-				<h3>Svrround I3604K Camera Control</h3>
-				<img style = "background-color: #FFF; border-radius: 50%; transform:scale(0.88);" src = "img/mobileLogo.png" width="48" height="48" />
-				<img src = "img/instahacking.png" width="48" height="48" />
 
-				<p>Camera IP Address</p>
+					<h3>Svrround I3604K Camera Control</h3>
+					<img style = "background-color: #FFF; border-radius: 50%; transform:scale(0.88);" src = "img/mobileLogo.png" width="48" height="48" />
+					<img src = "img/instahacking.png" width="48" height="48" />
 
-					<input id = "cameraIP" value = "192.168.77.1" placeholder = "Camera IP Address"/>
-					
-					<p>Stream Config</p>
-					
-					<select id = "resSelect">
-					  <option value="-1">Select Resolution</option>
-					  <option value="960">960</option>
-					  <option value="1088">1088</option>
-					  <option value="1360">1360</option>
-					  <option value="1440">1440</option>
-					  <option value="1504">1504</option>
-					  <option value="1920">1920</option>
-					</select>
+					<p>Camera IP Address</p>
 
-					<br /><br />
+						<input id = "cameraIP" value = "192.168.77.1" placeholder = "Camera IP Address"/>
+						
+						<p>Stream Config</p>
+						
+						<select id = "resSelect">
+						  <option value="-1">Select Resolution</option>
+						  <option value="960">960</option>
+						  <option value="1088">1088</option>
+						  <option value="1360">1360</option>
+						  <option value="1440">1440</option>
+						  <option value="1504">1504</option>
+						  <option value="1920">1920</option>
+						</select>
 
-					<select id = "bitSelect">
-					  <option value="-1">Select Bitrate</option>
-					  <option value="3145728">3 (Min/Wifi)</option>
-					  <option value="4194304">4 (Low/Wifi/Eth)</option>
-					  <option value="5242800">5 (Med/Wifi/Eth)</option>
-					  <option value="6291456">6 (Med/Eth)</option>
-					  <option value="8388608">8 (Med/Eth)</option>
-					  <option value="10485760">10 (High/Eth)</option>
-					  <option value="12582912">12 (High/Eth)</option>
-					  <option value="15728640">16 (Very High)</option>
-					  <option value="20971520">20 (Very High)</option>
-					</select>
+						<br /><br />
+
+						<select id = "bitSelect">
+						  <option value="-1">Select Bitrate</option>
+						  <option value="3145728">3 (Min/Wifi)</option>
+						  <option value="4194304">4 (Low/Wifi/Eth)</option>
+						  <option value="5242800">5 (Med/Wifi/Eth)</option>
+						  <option value="6291456">6 (Med/Eth)</option>
+						  <option value="8388608">8 (Med/Eth)</option>
+						  <option value="10485760">10 (High/Eth)</option>
+						  <option value="12582912">12 (High/Eth)</option>
+						  <option value="15728640">16 (Very High)</option>
+						  <option value="20971520">20 (Very High)</option>
+						</select>
+
+				</div>
+
+				<div id="controlSlider">
+					<p>
+						Stream is always under autoExposure
+					</p>
+
+					EV: <span id = "EVDis" >1.0</span>
+					<input id = "EV" class = "slide" type = "range" min="0.1" max="2.0" value = "1" step="0.1" />
+
+					Brightness: <span id = "brightnessDis" >128</span>
+					<input id = "brightness" class = "slide" type = "range" min="28" max="229" value = "128" />
+
+					Saturation: <span id = "saturationDis" >128</span>
+					<input id = "saturation" class = "slide" type = "range" min="28" max="229" value = "128" />
+
+					Contrast: <span id = "contrastDis" >128</span>
+					<input id = "contrast" class = "slide" type = "range" min="28" max="229" value = "128" />
+
+					Sharpness: <span id = "sharpnessDis" >128</span>
+					<input id = "sharpness" class = "slide" type = "range" min="0" max="255" value = "128" />
 
 				</div>
 				

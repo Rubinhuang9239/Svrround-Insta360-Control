@@ -29,6 +29,7 @@ insta.heartTest = null;
 insta.tcpConnected = false;
 insta.streaming = false;
 insta.preview = false;
+insta.currentIP = "192.168.77.1";
 
 insta.heartTestClock = setInterval(function(){
 
@@ -231,6 +232,69 @@ io.on('connection', function(webSocket){
 		open("/Applications/OBS.app");
 	});
 
+	webSocket.on("camSetting",function(config){
+		
+		//brightness
+		//{"cmd":"setCamera","data":{"value":229,"index":0,"property":"brightness"}}
+		//{"cmd":"setCamera","data":{"value":229,"index":1,"property":"brightness"}}
+		
+		//saturation
+		//{"cmd":"setCamera","data":{"value":229,"index":0,"property":"saturation"}}
+		//{"cmd":"setCamera","data":{"value":229,"index":1,"property":"saturation"}}
+		
+		//contrast
+		//{"cmd":"setCamera","data":{"value":229,"index":0,"property":"contrast"}}
+		//{"cmd":"setCamera","data":{"value":229,"index":1,"property":"contrast"}}
+		
+		//sharpness
+		//{"cmd":"setCamera","data":{"value":255,"index":0,"property":"sharpness"}}
+		//{"cmd":"setCamera","data":{"value":255,"index":1,"property":"sharpness"}}
+		
+		//exposure_auto
+		//{"cmd":"setCamera","data":{"value":1,"index":0,"property":"exposure_auto"}}
+		//{"cmd":"setCamera","data":{"value":1,"index":1,"property":"exposure_auto"}}
+		
+		//EV(setAutoExposureParam)
+		//{"cmd":"setAutoExposureParam","data":{"factor":2}}
+		
+		//ISO(gain)
+		//{"cmd":"setCamera","data":{"value":6400,"index":0,"property":"gain"}}
+		//{"cmd":"setCamera","data":{"value":6400,"index":1,"property":"gain"}}
+
+		if(insta.client){
+
+			if(insta.tcpConnected){
+		
+				var msg = null;
+				
+				if(config.property != "EV"){
+					var baseform_head = '{"cmd":"setCamera","data":{"value":';
+					var baseform_body1 = ',"index":0,"property":"';
+					var baseform_body2 = ',"index":1,"property":"';
+					var baseform_foot = '"}}\n';
+					
+					msg = baseform_head + config.value + baseform_body1 + config.property + baseform_foot +
+							baseform_head + config.value + baseform_body2 + config.property + baseform_foot;
+				}
+				else{
+					var baseform_head = '{"cmd":"setAutoExposureParam","data":{"factor":';
+					var baseform_foot = '}}\n';
+					
+					msg = baseform_head + config.value + baseform_foot;
+				}
+				console.log(msg);
+				insta.client.write(msg);
+			}else{
+				webSocket.emit("err", "TCP socket not connected yet!");
+			}
+
+		}else{
+			webSocket.emit("err", "TCP socket not established yet!");
+		}
+		
+		
+	});
+
 
 	var clinetConnectTo = function(ipaddress,webSocket){
 
@@ -243,25 +307,6 @@ io.on('connection', function(webSocket){
 
 			insta.tcpIpAddress = ipaddress;
 
-
-			// if(insta.client_role == "liveKit"){
-			// 	console.log('Connected_As_LiveKit');
-
-			// 	var date = new Date();
-
-			// 	var formedTime = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + " " 
-			// 	+ date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-			// 	console.log("Hacking starts at" + formedTime + "\n");
-
-			// 	insta.client.write('{"data":{"bitrate":10485760,"width":1440,"height":1440},"cmd":"startLive"}\n');
-
-				
-			// 	setTimeout(function(){
-			// 		insta.client.write('{"data":{"bitrate":10485760,"width":1440,"height":1440},"cmd":"stopLive"}\n');
-			// 	},10000);
-
-			// }
-			// else 
 			if(insta.client_role == "iOS"){
 				console.log('Connected_As_iOS');
 
