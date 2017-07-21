@@ -8,9 +8,9 @@ var io = require('socket.io')(http);
 
 http.listen(3000, function(){
     console.log("");
-    console.log("---------------| Hacking |-----------------");
+    console.log("---------| I360 4K Control Initializing |-----------");
     console.log("");
-    console.log("Service server open on:" + 3000);
+    console.log("Go to --> localhost:" + 3000);
 });
 
 app.use(express.static('public'));
@@ -30,12 +30,22 @@ insta.tcpConnected = false;
 insta.streaming = false;
 insta.preview = false;
 insta.currentIP = "192.168.77.1";
+insta.heartCkCount = 0;
 
 insta.heartTestClock = setInterval(function(){
 
 					if(insta.tcpConnected && insta.client){
-						console.log("heart");
+						console.log("heart >>");
 						insta.client.write('{"cmd":"heartTest","data":{}}\n');
+
+						insta.heartCkCount++;
+
+						if(insta.heartCkCount == 3){
+							//console.log('called');
+							insta.client.write('{"cmd":"queryState","data":{}}\n');
+							insta.heartCkCount = 0;
+						}
+
 					}
 
 				},10000);
@@ -71,7 +81,6 @@ function generateConnection(){
 			console.log('Received: ' + data);
 		}
 		
-
 		frontEnd.emit("info", data.toString());
 	});
 
@@ -314,13 +323,14 @@ io.on('connection', function(webSocket){
 
 				var formedTime = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + " " 
 				+ date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-				console.log("Hacking starts at" + formedTime + "\n");
+				console.log("----- Hacking starts at" + formedTime + " -----\n");
 
 				insta.client.write('{"cmd":"syncTime","data":{"time":"' + formedTime + '"}}\n');
 				insta.client.write('{"cmd":"queryOffset","data":{"key":"defaultOffset"}}\n');
-				insta.client.write('{"cmd":"queryVersion","data":{}}\n');
-				insta.client.write('{"cmd":"queryID","data":{}}\n');
-				insta.client.write('{"cmd":"queryStatistic","data":{}}\n');
+				//insta.client.write('{"cmd":"queryVersion","data":{}}\n');
+				//insta.client.write('{"cmd":"queryID","data":{}}\n');
+				//insta.client.write('{"cmd":"queryStatistic","data":{}}\n');
+				insta.client.write('{"cmd":"queryState","data":{}}\n');
 			}
 
 			webSocket.emit('tcpIp', insta.tcpIpAddress);

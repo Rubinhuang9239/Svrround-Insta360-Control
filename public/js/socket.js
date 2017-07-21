@@ -159,13 +159,15 @@ socket.on("info",function(info){
 
 			
 		}
+		
+		else if(parseInfo.type == "state"){
+			
+			animate.updateBattery( parseInfo.data.battery, parseInfo.data.onCharge);
+			
+		}
 
 
 	}
-
-	
-
-		//
 
 
 });

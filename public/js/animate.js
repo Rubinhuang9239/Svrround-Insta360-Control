@@ -75,6 +75,11 @@ animate.init = function(){
 	});
 
 
+	var instructionToggleBtn = document.getElementById("instructToggle")
+	instructionToggleBtn.addEventListener("click",function(){
+		console.log("hey");
+		animate.instructionToggle();
+	});
 
 
 	var conLed = document.getElementById("conLed");
@@ -144,7 +149,6 @@ animate.addShortCut = function(type, ip){
 
 animate.initSlideInput = function(){
 
-	console.log("hey");
 
 	var slideList = document.getElementsByClassName("slide");
 
@@ -161,8 +165,56 @@ animate.initSlideInput = function(){
 			currentSliderDisplay.innerHTML = e.target.value;
 
 			socket.emit("camSetting", config);
-		})
+		});
 	}
+
+	animate.resetCamSetting = function(){
+
+			var resetMsg = [{
+								property : "EV",
+							 	value : 1.0
+							 },
+							 {
+							 	property : "brightness",
+							 	value : 128
+							 },
+							 {
+							 	property : "saturation",
+							 	value : 128
+							 },
+							 {
+							 	property : "contrast",
+							 	value : 128
+							 },
+							 {
+							 	property : "sharpness",
+							 	value : 128
+							 }
+							];
+
+			for( i = 0; i < resetMsg.length; i++ ){
+
+				var currentConfig = resetMsg[i];
+				var currentSlider = document.getElementById(resetMsg[i].property);
+				currentSlider.value = resetMsg[i].value;
+
+				var currentSliderDisplay = document.getElementById(resetMsg[i].property + "Dis");
+				currentSliderDisplay.innerHTML = resetMsg[i].value;
+
+				socket.emit("camSetting", resetMsg[i]);
+
+			}
+
+
+			webConsole.logMsg("Camera setting reset emit");
+			
+	}
+
+	var resetCamSettingBtn = document.getElementById("resetCamSetting");
+
+	resetCamSettingBtn.addEventListener("click", function(){
+		animate.resetCamSetting();
+	});
 
 }
 
@@ -181,6 +233,38 @@ animate.initClipBoard = function(){
 		console.error('Action:', e.action);
 		console.error('Trigger:', e.trigger);
 	});
+
+}
+
+animate.instructOn = false;
+
+animate.instructionToggle = function(){
+
+	var instruct = document.getElementById("streamInstruction");
+
+	if(animate.instructOn){
+		instruct.style.display = "none";
+		animate.instructOn = false;
+	}
+	else{
+		instruct.style.display = "block";
+		animate.instructOn = true;
+	}
+}
+
+animate.updateBattery = function( batteryVal, charging ){
+
+	var batteryValShow = document.getElementById("batteryVal");
+	var batteryInfo = document.getElementById("batteryInfo");
+
+	batteryValShow.style.width = batteryVal + "px";
+
+	if(charging === true){
+		batteryInfo.innerHTML = batteryVal + "% " + "<span style = 'color : #00FFBB;'>Charging</span>";
+	}
+	else{
+		batteryInfo.innerHTML = batteryVal + "% " + Math.floor(70 * (batteryVal/100)) + " min";
+	}
 
 }
 

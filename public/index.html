@@ -29,6 +29,74 @@
 			padding: 10px;
 
 		}
+
+		.statusItem{
+			height: 100%;
+			position: absolute;
+			top: 0px;
+			border-left:solid 2px #444;
+			line-height: 30px;
+			box-sizing: border-box;
+			font-size: 0.5em;
+		}
+
+		#battery{
+			right: 0px;
+			width: 180px;
+			padding-right: 5px;
+			text-align: right;
+		}
+
+		.batteryValComp{
+			width: 100px;
+			height: 3px;
+		}
+
+		#batteryValBG{
+			background-image: url("img/batteryBG.png");
+			background-repeat: repeat-x;
+			background-position: left;
+			background-size: 5% 100%;
+			position: absolute;
+			top: 14px;
+			left: 7px;
+			background-color: #333;
+		}
+
+		#batteryVal{
+			width: 0px;
+			overflow-x: hidden;
+		}
+
+		#batteryValTexture{
+			background-image: url("img/battery.jpg");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: 100% 100%;
+		}
+
+		#instructToggle{
+			text-align: center;
+			right: 180px;
+			width: 100px;
+			cursor: pointer;
+			transition: background 0.2s ease-in-out;
+		}
+
+		#instructToggle:hover{
+			background-color: #222;
+		}
+
+
+
+		#statusBar{
+			position: absolute;
+			top: 0px;
+			width: 100%;
+			height: 30px;
+			background-color: #000;
+			z-index: 9;
+		}
 		
 		.Indicators{
 			float: left;
@@ -66,7 +134,7 @@
 		
 		#preview{
 			position:absolute;
-			top: 0px;
+			top: 30px;
 			left: 0px;
 			height:360px;
 			width:50%;
@@ -112,7 +180,7 @@
 		
 		#indication{
 			position:absolute;
-			top: 0px;
+			top: 30px;
 			right: 0px;
 			height:360px;
 			width: 50%;
@@ -121,7 +189,7 @@
 		
 		#controls{
 			position:absolute;
-			top:360px;
+			top:390px;
 		}
 		
 		.panelHeaders{
@@ -132,7 +200,7 @@
 		
 		#about{
 			position: absolute;
-			top: 700px;
+			top: 730px;
 		}
 
 		#indicatorBox{
@@ -225,8 +293,19 @@
 			left: 25%;
 		}
 
+		#controlSlider .controlFunc{
+			position: relative;
+			width: 60%;
+			margin: 10px auto;
+			height: 1.8em;
+			line-height: 1.8em;
+			background-color: #FF9900;
+			color: #FFF;
+			font-size: 1em !important;
+		}
+
 		#controlSlider .slide{
-			width: 100%;
+			width: 96%;
 			height: 20px;
 			padding-top: 5px;
 			padding-bottom: 5px;
@@ -277,6 +356,7 @@
 			font-size: 1.1em;
 		}
 
+
 		#lsFile{
 			right: 5px;
 			height: 210px;
@@ -294,11 +374,28 @@
 			background-color: #CCA;
 		}
 
+		#streamInstruction{
+			height: 40%;
+			width: 36%;
+			min-width: 320px;
+			position: absolute;
+			top: 5%;
+			left: 12px;
+			z-index: 9999;
+			background-color: #666;
+			overflow-y: scroll;
+			border-radius: 4px;
+			box-shadow: 1px 1px 8px rgba(0,0,0,0.5);
+			padding: 5px;
+			color: #CCC;
+			display: none;
+		}
+
 
 		
 	</style>
 		
-	<script src = "js/socket.io.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
 	<script src = "js/clipboard.min.js"></script>
 	<script src = "js/socket.js"></script>
 	<script src = "js/animate.js"></script>
@@ -322,6 +419,25 @@
 	<body>
 		
 		<div id = "container">
+
+			<div class = "panel" id = "statusBar">
+
+			<div class = "statusItem" id = "battery">
+
+				<div class = "batteryValComp" id = "batteryValBG">
+					<div class = "batteryValComp" id = "batteryVal">
+						<div class = "batteryValComp" id = "batteryValTexture">
+						</div>
+					</div>
+				</div>
+
+				<span id = "batteryInfo">Disconnected</span>
+
+			</div>
+
+			<div class = "statusItem" id = "instructToggle" >Stream Instruction</div>
+
+			</div>
 			
 			<div class = "panel" id = "preview">
 				
@@ -371,12 +487,12 @@
 						
 						<select id = "resSelect">
 						  <option value="-1">Select Resolution</option>
-						  <option value="960">960</option>
-						  <option value="1088">1088</option>
-						  <option value="1360">1360</option>
-						  <option value="1440">1440</option>
-						  <option value="1504">1504</option>
-						  <option value="1920">1920</option>
+						  <option value="960">960 P</option>
+						  <option value="1088">1088 P</option>
+						  <option value="1360">1360 P</option>
+						  <option value="1440">1440 P</option>
+						  <option value="1504">1504 P</option>
+						  <option value="1920">1920 P</option>
 						</select>
 
 						<br /><br />
@@ -387,11 +503,11 @@
 						  <option value="4194304">4 (Low/Wifi/Eth)</option>
 						  <option value="5242800">5 (Med/Wifi/Eth)</option>
 						  <option value="6291456">6 (Med/Eth)</option>
-						  <option value="8388608">8 (Med/Eth)</option>
+						  <option value="7340032">7 (Med/Eth)</option>
+						  <option value="8388608">8 (High/Eth)</option>
 						  <option value="10485760">10 (High/Eth)</option>
-						  <option value="12582912">12 (High/Eth)</option>
+						  <option value="12582912">12 (Very High/Eth)</option>
 						  <option value="15728640">16 (Very High)</option>
-						  <option value="20971520">20 (Very High)</option>
 						</select>
 
 				</div>
@@ -416,6 +532,8 @@
 					Sharpness: <span id = "sharpnessDis" >128</span>
 					<input id = "sharpness" class = "slide" type = "range" min="0" max="255" value = "128" />
 
+					<div class = "controlFunc" id = "resetCamSetting" > Reset </div>
+
 				</div>
 				
 				<div id = "controlKeys">
@@ -436,6 +554,116 @@
 				
 				Copyright @ Svrround 2017
 				
+			</div>
+
+			<div id = "streamInstruction">
+				<p>
+					<h4>
+					Procedure for live stream from Ricoh Theta camera to Youtube 360.
+					</h4>
+
+					Limitation: For better stability and stitch, using OBS on a desktop is highly recommend.<br />
+					Based on. the camera capability, bitrate of the stream from Insta360 4K should below 8.
+					<br /><br />
+
+					Hardware: Insta360 4K, PC Laptop / PC Desktop, Router, other accessories.<br />
+					Software: Svrround Insta360 Node.js Controller, Google Chrome, OBS.
+					<br />
+					<br />
+
+					Stream to youtube 360 is very complicated, follow these step,<br />
+					Some steps are very critical, once you made mistake, you may have to start over the configuration. This whole process takes about 25-35 minutes.
+					<br /><br />
+
+					1. Screw the Insta360 4K camera to a tripod.
+					<br /><br />
+
+					2.Turn on the camera by long press the button.
+					<br /><br />
+
+					3.Connect the camera with USB mini adaptor > USB to ethernet adaptor > ethernet cable > router, wait for it’s IP address show up.
+					<br /><br />
+
+					4. Start the Svrround Insta360 Node.js Controller, input the camera’s IP address at “Camera IP” then click “Connect”, select resolution to “1440”, bitrate to “8”. Press start stream, about 5 seconds later you will see the indication popup in the console,  (This is for stream from the camera, not to youtube.)
+					<br /><br />
+
+					5. Simply click on the popup you will open OBS automatically and have the RTMP URL on your clipboard, wait for the OBS launch.
+					<br /><br />
+
+					6. In OBS and add source by click “+” in under the source filed, select “Media Source”, select “Create New” and “Make source visible”, then hit “OK”.
+					<br /><br />
+
+					7. uncheck the “Local File”, paste the RTMP URL, check “insta360 stitcher”, then, hit “OK”.
+					<br /><br />
+
+					8. Make sure you see the image inbound. (if the video seems laggy or drop frame very frequently, stop the stream from the camera and reduce the bitrate setting, then start the stream again.)
+					<br /><br />
+
+					9. Open Google Chrome, go to Youtube and login.
+					<br /><br />
+
+					10. Click on user account icon, select “Creator Studio”.
+					<br /><br />
+
+					 
+					11. Click “Live Stream” on the sidebar, then click “Event”.
+					<br /><br />
+					 
+
+					12. On top right click “New live event”.
+					<br /><br />
+
+					13. In the form, input “Title”, choose an appropriate time for start streaming.
+					<br /><br />
+					 
+					14. MUST choose “Custom” in the “Type”. 
+					<br /><br />
+
+					15. Go to “Advance Setting”, check the 360° video, Then hit “Create event”.
+					<br /><br />
+
+					16. In the next interface, Select “Custom ingestion”, then select “Create a stream” in the dropdown. Input stream name and select 9000 Kbps - 1.3Mbps(1440p), then click “Save Changes”.
+					<br /><br />
+
+					17. Select “Other encoders”.
+					<br /><br />
+
+					18. Copy “Stream Name”(stream key).
+					<br /><br />
+
+					19. Go back to OBS. Click the Settings button and go to “Stream”, in the service select “YouTube / YouTube Gaming”, “Primary YouTube ingest server”, paste your “Stream key”(Stream name).
+					<br /><br />
+
+					20. Go to “Output”, input the Video Bitrate to 12000.
+					<br /><br />
+
+					21. Go to “Video”, input both Base(Canvas) and Output(scaled) Resolution to 2580x1440. Click Ok.
+					<br /><br />
+
+					22. Right click on the video canvas, go to “Transform”, then select Stretch to screen.
+					<br /><br />
+
+					23. Click “Start Streaming”.
+					<br /><br />
+
+					24. Go back to YouTube, click on “Live Control Room”.
+					<br /><br />
+
+					25. Click on “Preview”, give it a second(like 20 seconds). After the prompt goes off and side the webpage to the “Preview” session, start the preview.
+					<br /><br />
+
+					26. If you see a stable video is playing in the player, pause it, it doesn’t have to be crystal clear. DO NOT start the streaming video down below.(If you did you have to refresh this page.)
+					<br /><br />
+
+					27. Slide up and make sure you see the status of the stream is health, if they give you alert about the bitrate, you may have to adjust that in the OBS and start the stream again or even start over the event settings. You CAN NOT modify most of the settings of the stream anymore.
+					<br /><br />
+					 
+					28. Click Start Streaming. Click ok on the prompt. You can slide to the bottom and inspect the live Stream. It should be pretty smooth and there is somehow 25-40 seconds delay there you can not avoid.
+					<br /><br />
+
+					29. Always stop streaming when you finished. It won’t stop itself unless you setup the finish time.
+
+				</p>
 			</div>
 
 		</div>
